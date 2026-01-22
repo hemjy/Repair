@@ -37,7 +37,7 @@ namespace Repair.Application.Features.Brands.Queries
 
                var total = query.Count();
                 var data = query.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize)
-                    .Select(x => new GetBrandsDto { Name = x.Name, Id = x.Id })
+                    .Select(x => new GetBrandsDto { Name = x.Name, Id = x.Id, Description = x.Description })
                     .ToList();
 
                 return Result<List<GetBrandsDto>>.Success(

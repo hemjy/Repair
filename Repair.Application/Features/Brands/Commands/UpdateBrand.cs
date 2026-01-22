@@ -14,6 +14,8 @@ namespace Repair.Application.Features.Brands.Commands
         [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
         public string? Name { get; set; }
         [Required]
+        public string? Description { get; set; }
+        [Required]
         public Guid Id { get; set; }
 
        
@@ -38,6 +40,7 @@ namespace Repair.Application.Features.Brands.Commands
                 var brand = await brandRepository.GetByIdAsync(request.Id);
                 if (brand is null || brand.IsDeleted) return Result<Guid>.Failure("Brand does not exit");
                 brand.Name = request.Name;
+                brand.Description = request.Description;
 
                 // Add the new brand to the repository
                 await brandRepository.UpdateAsync(brand);

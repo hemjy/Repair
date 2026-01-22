@@ -14,13 +14,13 @@ namespace Repair.Infrastructure.Persistence.Data
             // ---------- Brands ----------
             var brands = new[]
             {
-            Brand.Create("iPhone"),
-            Brand.Create("Samsung"),
-            Brand.Create("Google"),
-            Brand.Create("Huawei"),
-            Brand.Create("Xiaomi"),
-            Brand.Create("OnePlus"),
-            Brand.Create("Oppo")
+            Brand.Create("iPhone", "Is your iPhone screen, battery, back glass or battery broken? As an Independent Repair Provider for Apple, we can repair your iPhone with original parts, but also with cheaper alternatives of the highest quality!"),
+            Brand.Create("Samsung", "Do you want to replace your Samsung screen, back glass, camera or battery? We offer Samsung repairs with original parts or cheaper options of the highest quality! We do this with a 30-minute service and you are assured of your data!"  ),
+            Brand.Create("Google", "Do you want to replace your Google pixel screen, back glass, camera or battery? We offer Samsung repairs with original parts or cheaper options of the highest quality! We do this with a 30-minute service and you are assured of your data!"),
+            Brand.Create("Huawei", "Do you want to replace your Huawei screen, back glass, camera or battery? We offer repairs with original parts or cheaper options of the highest quality! We do this with a 30-minute service and you are assured of your data!"),
+            Brand.Create("Xiaomi", "Do you want to replace your Xiaomi screen, back glass, camera or battery? We offer repairs with original parts or cheaper options of the highest quality! We do this with a 30-minute service and you are assured of your data!"),
+            Brand.Create("OnePlus", "Is your OnePlus screen, battery, back glass or battery broken? As an Independent Repair Provider, we can repair your Phone with original parts, but also with cheaper alternatives of the highest quality!"),
+            Brand.Create("Oppo", "Is your Oppo screen, battery, back glass or battery broken? As an Independent Repair Provider for Apple, we can repair your Oppo with original parts, but also with cheaper alternatives of the highest quality!")
         };
 
             context.Brands.AddRange(brands);

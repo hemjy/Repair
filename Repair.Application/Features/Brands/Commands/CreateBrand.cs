@@ -11,8 +11,10 @@ namespace Repair.Application.Features.Brands.Commands
     {
 
         [Required]
-        [StringLength(100, ErrorMessage = "Title cannot be longer than 100 characters.")]
+        [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
         public string? Name { get; set; }
+        [Required]
+        public string? Description { get; set; }
 
        
     }
@@ -36,7 +38,7 @@ namespace Repair.Application.Features.Brands.Commands
 
                 // Create a new brand 
                 var newbrand = Brand
-                    .Create(request.Name);
+                    .Create(request.Name, request.Description);
 
                 // Add the new brand to the repository
                 await brandRepository.AddAsync(newbrand);

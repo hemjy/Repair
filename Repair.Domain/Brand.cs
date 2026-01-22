@@ -13,7 +13,8 @@ namespace Repair.Domain
             
         }
         public required string Name { get; set; }
+        public  string Description { get; set; }
 
-        public static Brand Create(string Name) => new() { Name = Name };
+        public static Brand Create(string Name, string description) => new() { Name = Name, Description = description};
     }
 }
