@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using Repair.Application.Interfaces;
 using Repair.Application.Interfaces.Auth;
 using Repair.Application.Interfaces.Repositories;
@@ -49,7 +50,7 @@ namespace Repair.Infrastructure
             })
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultTokenProviders();
-
+            Console.WriteLine($"SecretKey: {configuration["JwtSettings:SecretKey"]}");
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -60,6 +61,7 @@ namespace Repair.Infrastructure
            {
                options.TokenValidationParameters = new TokenValidationParameters
                {
+
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"])),
                    ValidIssuer = configuration["JwtSettings:Issuer"],
                    ValidAudience = configuration["JwtSettings:Audience"],
