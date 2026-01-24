@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Repair.Domain;
 
 namespace Repair.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -11,6 +13,9 @@ namespace Repair.Infrastructure.Persistence
             this.Database.Migrate();
         }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<PhonePart> PhoneParts { get; set; }
         public DbSet<PhoneModel> PhoneModels { get; set; }
         public DbSet<RepairPrice> RepairPrices { get; set; }
