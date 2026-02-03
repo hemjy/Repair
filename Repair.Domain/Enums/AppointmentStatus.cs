@@ -4,6 +4,6 @@ namespace Repair.Domain.Enums
 {
     public enum AppointmentStatus
     {
-        Pending, Processing, Done, Rejected
+        None, Pending, Processing, Done, Rejected, Delivered
     }
 }

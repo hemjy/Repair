@@ -2,6 +2,7 @@ using Repair.Application;
 using Repair.Application.Features.Brands.Commands;
 using Repair.Infrastructure;
 using Serilog;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
@@ -19,7 +20,7 @@ builder.Services.AddInfrastructure(config);
 builder.Services.AddMediatR(cfg =>
 cfg.RegisterServicesFromAssemblies(new[] { typeof(Program).Assembly, typeof(AppAssembly).Assembly }));
 
-//builder.Services.AddValidatorsFromAssembly(typeof(AppAssembly).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(AppAssembly).Assembly);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
