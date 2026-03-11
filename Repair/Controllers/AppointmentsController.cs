@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repair.Application.Common;
+using Repair.Application.DTOs.Appointments;
 using Repair.Application.Features.Appointments.Commands;
 using Repair.Application.Features.Appointments.Queries;
 
@@ -25,6 +26,24 @@ namespace Repair.Api.Controllers
         [ProducesResponseType(200, Type = typeof(Result<Guid>))]
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetAppointmentsQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
+        [ProducesResponseType(200, Type = typeof(Result<List<GetTopRepairPartDto>>))]
+        [HttpGet("TopRepairs")]
+        public async Task<IActionResult> GetTopRepair([FromQuery] GetTopRepairPartsQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
+        [ProducesResponseType(200, Type = typeof(Result<List<GetTopCustomerDto>>))]
+        [HttpGet("TopCustomers")]
+        public async Task<IActionResult> GetTopCustomer([FromQuery] GetTopCustomersQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
+        [ProducesResponseType(200, Type = typeof(Result<List<GetTopCustomerDto>>))]
+        [HttpGet("Stats")]
+        public async Task<IActionResult> Stats([FromQuery] GetAppointmentStatQuery query)
         {
             return Ok(await Mediator.Send(query));
         }

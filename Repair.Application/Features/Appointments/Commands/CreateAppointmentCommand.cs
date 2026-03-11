@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Repair.Application.Common;
 using Repair.Application.DTOs.Appointments;
+using Repair.Application.DTOs.EmailSetting;
+using Repair.Application.Helpers;
 using Repair.Application.Interfaces;
 using Repair.Application.Interfaces.Repositories;
 using Repair.Domain;
@@ -39,7 +41,8 @@ namespace Repair.Application.Features.Appointments.Commands
     public class CreateAppointmentCommandHandler(ILogger<CreateAppointmentCommandHandler> logger,
             IGenericRepositoryAsync<Appointment> appointmentRepository,
             IGenericRepositoryAsync<RepairPrice> repairPriceRepository,
-            IFileStorageService fileStorage) : IRequestHandler<CreateAppointmentCommand, Result<Guid>>
+            IFileStorageService fileStorage,
+            IEmailService emailService) : IRequestHandler<CreateAppointmentCommand, Result<Guid>>
     {
         public async Task<Result<Guid>> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
@@ -51,14 +54,19 @@ namespace Repair.Application.Features.Appointments.Commands
                 if (!repairPriceExist) return Result<Guid>.Failure("Repair Part Does not exist.");
 
                 if(!TimeOnly.TryParse(request.AppointmentTime, out var appointmentTime)) return Result<Guid>.Failure("Invalid Appointment Time");
+
+                var lastOrderNumber = appointmentRepository.GetAllQuery().OrderByDescending(x => x.Created).Select(x => x.OrderNumber).FirstOrDefault();
+                var orderNumber = OrderHelper.GetNextOrderNumber(lastOrderNumber);
                 // Create a new Appointment 
                 var newAppointment = Appointment
                     .Create(repairPriceId: request.RepairPriceId, comment: request.Comment, customerEmail: request.CustomerEmail, customerPhoneNumber: request.CustomerPhoneNumber,
                     customerLastname: request.CustomerLastname, customerFirstName: request.CustomerFirstName, CustomerCity: request.CustomerCity, CustomerAddress: request.CustomerAddress,
-                    CustomerState: request.CustomerState, appointmentDay: request.AppointmentDay, appointmentTime: appointmentTime);
+                    CustomerState: request.CustomerState, appointmentDay: request.AppointmentDay, appointmentTime: appointmentTime, orderNo: orderNumber);
 
                 // Add the new Appointment to the repository
                 await appointmentRepository.AddAsync(newAppointment);
+
+                await emailService.SendAsync(new EmailMessage {Body = "Create Appointment ", Recipients = [request.CustomerEmail], Subject = "Appointment Booked"});
                 return Result<Guid>.Success(newAppointment.Id);
 
             }

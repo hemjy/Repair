@@ -8,10 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
+using Repair.Application.DTOs.EmailSetting;
 using Repair.Application.Interfaces;
 using Repair.Application.Interfaces.Auth;
 using Repair.Application.Interfaces.Repositories;
 using Repair.Domain;
+using Repair.Infrastructure.Notifications;
 using Repair.Infrastructure.Persistence;
 using Repair.Infrastructure.Persistence.Data;
 using Repair.Infrastructure.Persistence.Identity;
@@ -38,6 +40,7 @@ namespace Repair.Infrastructure
             services.AddMemoryCache();
             services.AddScoped(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
             services.AddSingleton<IFileStorageService, FileStorageService>();
+            services.AddSingleton<IEmailService, EmailService>();
 
             services.AddIdentity<User, Role>(options =>
             {
@@ -106,6 +109,8 @@ namespace Repair.Infrastructure
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+            services.Configure<Google>(configuration.GetSection("Google"));
 
             // Seed data after the context is configured
             using var serviceProvider = services.BuildServiceProvider();

@@ -13,6 +13,7 @@ namespace Repair.Domain
         public Guid RepairPriceId { get; set; }
         public RepairPrice RepairPrice { get; set; }
         public decimal AmountPaid { get; set; }
+        public string OrderNumber { get; set; }
         public string Comment { get; set; }
         public string CustomerPhoneNumber { get; set; }
         public string CustomerEmail { get; set; }
@@ -25,10 +26,11 @@ namespace Repair.Domain
         public TimeOnly AppointmentTime { get; set; }
         public AppointmentStatus AppointmentStatus { get; set; }
 
-        public static Appointment Create(Guid repairPriceId, string comment, string customerPhoneNumber, string customerLastname, string customerFirstName, string customerEmail, TimeOnly appointmentTime, DateTime appointmentDay, string? CustomerState, string? CustomerCity, string? CustomerAddress) => new()
+        public static Appointment Create(Guid repairPriceId, string comment, string customerPhoneNumber, string customerLastname, string customerFirstName, string customerEmail, TimeOnly appointmentTime, DateTime appointmentDay, string? CustomerState, string? CustomerCity, string? CustomerAddress, string orderNo) => new()
         {
             RepairPriceId = repairPriceId,
             CustomerPhoneNumber = customerPhoneNumber,
+            OrderNumber = orderNo,
             CustomerLastname = customerLastname,
             CustomerFirstName = customerFirstName,
             Id = Guid.NewGuid(),

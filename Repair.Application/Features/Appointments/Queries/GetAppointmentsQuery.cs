@@ -70,6 +70,7 @@ namespace Repair.Application.Features.Appointments.Queries
                     CustomerCity = x.CustomerCity, 
                     CustomerEmail = x.CustomerEmail,
                     CustomerFirstName = x.CustomerFirstName,
+                    OrderNumber = x.OrderNumber,
                     CustomerLastname = x.CustomerLastname,
                     CustomerPhoneNumber = x.CustomerPhoneNumber,
                     CustomerState = x.CustomerState,
@@ -79,6 +80,7 @@ namespace Repair.Application.Features.Appointments.Queries
                     ModelName = x.RepairPrice.PhoneModel.Name,
                     PartName = x.RepairPrice.PhonePart.Name,
                     RepairPriceId = x.RepairPriceId,
+                        Cost = x.RepairPrice.Cost,
                     Status = x.AppointmentStatus.ToString()})
                     .ToList();
 
