@@ -42,6 +42,12 @@ namespace Repair.Api.Controllers
             return Ok(await Mediator.Send(query));
         }
         [ProducesResponseType(200, Type = typeof(Result<List<GetTopCustomerDto>>))]
+        [HttpGet("Customers")]
+        public async Task<IActionResult> GetCustomer([FromQuery] GetCustomersQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
+        [ProducesResponseType(200, Type = typeof(Result<List<GetTopCustomerDto>>))]
         [HttpGet("Stats")]
         public async Task<IActionResult> Stats([FromQuery] GetAppointmentStatQuery query)
         {

@@ -52,6 +52,14 @@ namespace Repair.Application.Features.Appointments.Queries
                 { 
                     query = query.Where(x => x.RepairPrice.PhoneModel.BrandId == request.BrandId);
                 }
+                if (request.StartDate.HasValue)
+                { 
+                    query = query.Where(x => x.AppointmentDay >= request.StartDate.Value);
+                }
+                if (request.EndDate.HasValue)
+                { 
+                    query = query.Where(x => x.AppointmentDay <= request.EndDate.Value);
+                }
                 if (request.ModelId.HasValue)
                 {
                     query = query.Where(x => x.RepairPrice.PhoneModelId == request.ModelId);
@@ -81,6 +89,8 @@ namespace Repair.Application.Features.Appointments.Queries
                     PartName = x.RepairPrice.PhonePart.Name,
                     RepairPriceId = x.RepairPriceId,
                         Cost = x.RepairPrice.Cost,
+                        Created = x.Created,
+                        Id = x.Id,
                     Status = x.AppointmentStatus.ToString()})
                     .ToList();
 

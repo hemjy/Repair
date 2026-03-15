@@ -25,6 +25,7 @@ namespace Repair.Application.DTOs.Appointments
         public string? CustomerCity { get; set; }
         public string? CustomerState { get; set; }
         public DateTime AppointmentDay { get; set; }
+        public DateTime Created { get; set; }
         public string AppointmentTime { get; set; }
         public string Status { get; set; }
     }
@@ -52,5 +53,13 @@ namespace Repair.Application.DTOs.Appointments
         public string Email { get; set; }
         public int Count { get; set; }
         public string PhoneNumber { get; set; }
+    }
+    public class GetCustomerDto
+    {
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string Address { get; set; }
     }
 }
