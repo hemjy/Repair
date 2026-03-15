@@ -1,8 +1,9 @@
+using FluentValidation;
 using Repair.Application;
 using Repair.Application.Features.Brands.Commands;
 using Repair.Infrastructure;
 using Serilog;
-using FluentValidation;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
@@ -22,7 +23,10 @@ cfg.RegisterServicesFromAssemblies(new[] { typeof(Program).Assembly, typeof(AppA
 
 builder.Services.AddValidatorsFromAssembly(typeof(AppAssembly).Assembly);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
