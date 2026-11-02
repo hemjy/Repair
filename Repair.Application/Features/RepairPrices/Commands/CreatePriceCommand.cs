@@ -37,7 +37,7 @@ namespace Repair.Application.Features.Prices.Commands
                 var phoneModelExists = await phoneModelRepository.IsUniqueAsync(x => x.Id == request.PhoneModelId && !x.IsDeleted);
                 var phonePartExists = await phonePartRepository.IsUniqueAsync(x =>  x.Id == request.PhonePartId && !x.IsDeleted);
 
-                if (priceExists) return Result<Guid>.Failure("Price Already Exist for the Phone Part");
+                if (priceExists) return Result<Guid>.Failure("Price already Exist for the Phone Part");
                 if (!phoneModelExists) return Result<Guid>.Failure("Invalid Phone Model Selected");
                 if (!phonePartExists) return Result<Guid>.Failure("Invalid Phone Part Selected");
                

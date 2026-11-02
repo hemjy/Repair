@@ -56,7 +56,7 @@ namespace Repair.Application.Features.Prices.Queries
                 var total = query.Count();
                 var data = query.Include(x => x.PhonePart).Include(x => x.PhoneModel.Brand).Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize)
                     .Select(x => new GetPricesDto {  Id = x.Id, BrandId = x.PhoneModel.BrandId, BrandName = x.PhoneModel.Brand.Name,
-                    PhoneModelId = x.PhoneModelId, PhoneModeName = x.PhoneModel.Name, PhonePartId = x.PhonePartId, Cost = x.Cost, PhonePartName = x.PhonePart.Name, DUration = $"{x.Duration} Minutes"})
+                    PhoneModelId = x.PhoneModelId, PhoneModelName = x.PhoneModel.Name, PhonePartId = x.PhonePartId, Cost = x.Cost, PhonePartName = x.PhonePart.Name, DUration = $"{x.Duration} Minutes"})
                     .ToList();
 
                 return Result<List<GetPricesDto>>.Success(

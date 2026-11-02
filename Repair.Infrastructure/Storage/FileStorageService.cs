@@ -38,7 +38,7 @@ namespace Repair.Infrastructure.Storage
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(
-                        $"campaign_{Guid.NewGuid()}{fileExtension}",
+                        $"img_{Guid.NewGuid()}{fileExtension}",
                         stream
                     ),
                     Folder = "Images"

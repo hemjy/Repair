@@ -8,7 +8,7 @@ namespace Repair.Application.DTOs.PhoneParts
         public Guid BrandId { get; set; }
         public string BrandName { get; set; }
         public Guid PhoneModelId { get; set; }
-        public string PhoneModeName { get; set; }
+        public string PhoneModelName { get; set; }
         public Guid PhonePartId { get; set; }
         public string PhonePartName { get; set; }
         public decimal Cost { get; set; }

@@ -3,12 +3,16 @@ using Microsoft.Extensions.Options;
 using MimeKit;
 using Repair.Application.DTOs.EmailSetting;
 using Repair.Application.Interfaces;
+using System.Text;
+using System.Text.Json;
 
 namespace Repair.Infrastructure.Notifications
 {
     public class EmailService(
         IOptions<Google> googleConfig,
-        ILogger<EmailService> logger) : IEmailService
+        IOptions<BrevoOptions> brevoOptions,
+        HttpClient httpClient,
+    ILogger<EmailService> logger) : IEmailService
     {
         public async Task<bool> SendAsync(EmailMessage request)
         {
@@ -79,5 +83,63 @@ namespace Repair.Infrastructure.Notifications
             }
             return true;
         }
+
+     
+
+            private async Task BrevoAsync(
+                string recipientEmail,
+                string recipientName,
+                string subject,
+                string htmlContent,
+                CancellationToken cancellationToken = default)
+            {
+                var requestBody = new
+                {
+                    sender = new
+                    {
+                        name = brevoOptions.Value.SenderName,
+                        email = brevoOptions.Value.SenderEmail
+                    },
+
+                    to = new[]
+                    {
+                new
+                {
+                    email = recipientEmail,
+                    name = recipientName
+                }
+            },
+
+                    subject,
+                    htmlContent
+                };
+
+                var json = JsonSerializer.Serialize(requestBody);
+
+                using var request = new HttpRequestMessage(
+                    HttpMethod.Post,
+                    "v3/smtp/email");
+
+                request.Headers.Add("api-key", brevoOptions.Value.ApiKey);
+
+                request.Content = new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json");
+
+                using var response = await httpClient.SendAsync(
+                    request,
+                    cancellationToken);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadAsStringAsync(
+                        cancellationToken);
+
+                    throw new Exception(
+                        $"Brevo email failed. Status: {response.StatusCode}. Error: {error}");
+                }
+            }
+        
     }
 }

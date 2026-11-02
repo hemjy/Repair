@@ -37,7 +37,7 @@ namespace Repair.Application.Features.PhoneModels.Commands
                 var phoneModelExists = await phoneModelRepository
                                    .IsUniqueAsync(x => x.Name.Trim().ToLower() == request.Name.Trim().ToLower() && x.BrandId == request.BrandId && !x.IsDeleted);
                 var brandExist = await brandRepository.IsUniqueAsync(x => x.Id == request.BrandId && !x.IsDeleted);
-                if (phoneModelExists)
+                 if (phoneModelExists)
                 {
                     return Result<Guid>.Failure("Phone Model Already Exist.");
                 }
