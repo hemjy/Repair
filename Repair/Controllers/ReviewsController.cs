@@ -11,7 +11,7 @@ namespace Repair.Api.Controllers
     {
         [ProducesResponseType(200, Type = typeof(Result<Guid>))]
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CreateReviewCommand command)
+        public async Task<IActionResult> Create([FromForm] CreateBlogCategoryCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

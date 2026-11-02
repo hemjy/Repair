@@ -8,6 +8,20 @@ namespace Repair.Infrastructure.Persistence.Data
     {
         public static void  Seed (ApplicationDbContext context)
         {
+            if (!context.BlogCategories.Any()) 
+            {
+                var blogCategories = new[]
+                {
+                    BlogCategory.Create("iPhone Tips"),
+                    BlogCategory.Create("Android Care"),
+                    BlogCategory.Create("Buying Guides"),
+                    BlogCategory.Create("Repair Insights"),
+                    BlogCategory.Create("Tech Education"),
+                    BlogCategory.Create("Dealer Corner")
+                };
+                context.BlogCategories.AddRange(blogCategories);
+                context.SaveChanges();
+            }
             if (context.Brands.Any())
                 return;
 

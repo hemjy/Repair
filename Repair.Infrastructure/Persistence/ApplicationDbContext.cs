@@ -21,6 +21,8 @@ namespace Repair.Infrastructure.Persistence
         public DbSet<RepairPrice> RepairPrices { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

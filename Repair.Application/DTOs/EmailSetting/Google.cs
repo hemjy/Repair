@@ -15,4 +15,10 @@ namespace Repair.Application.DTOs.EmailSetting
         public int SMTPServerPort { get; set; }
         public bool SMTPServerEnableSSL { get; set; }
     }
+    public class BrevoOptions
+    {
+        public string ApiKey { get; set; } = string.Empty;
+        public string SenderName { get; set; } = string.Empty;
+        public string SenderEmail { get; set; } = string.Empty;
+    }
 }

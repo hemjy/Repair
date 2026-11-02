@@ -205,6 +205,91 @@ namespace Repair.Infrastructure.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("Repair.Domain.BlogCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Modified")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogCategories");
+                });
+
+            modelBuilder.Entity("Repair.Domain.BlogPost", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BlogCategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Modified")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogCategoryId");
+
+                    b.ToTable("BlogPosts");
+                });
+
             modelBuilder.Entity("Repair.Domain.Brand", b =>
                 {
                     b.Property<Guid>("Id")
@@ -612,6 +697,17 @@ namespace Repair.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("RepairPrice");
+                });
+
+            modelBuilder.Entity("Repair.Domain.BlogPost", b =>
+                {
+                    b.HasOne("Repair.Domain.BlogCategory", "BlogCategory")
+                        .WithMany()
+                        .HasForeignKey("BlogCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BlogCategory");
                 });
 
             modelBuilder.Entity("Repair.Domain.Feedback", b =>
